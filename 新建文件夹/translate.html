@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>雨滴特效</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            background: pink;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="mycanvas">您的浏览器不支持本特效，请更换浏览器</canvas>
+</body>
+<script>
+    var can = document.getElementById("mycanvas"); // 获取画布
+    // 设置canvas绘图环境
+    var ctx = can.getContext('2d');
+    // 设置canvas宽高
+    var w = can.width = window.innerWidth;
+    var h = can.height = window.innerHeight;
+    window.onresize = function () {
+        w = can.width = window.innerWidth;
+        h = can.height = window.innerHeight;
+    }
+    // 绘制矩形坐标
+
+    // 动画原理
+    // var y = 0;
+    // setInterval(function () {
+    //     ctx.clearRect(0, 0, w, h);
+    //     y++;
+    //     ctx.fillRect(100, y, 50, 50);
+    // }, 100)
+
+    // js编程思维：面向过程、面向对象
+
+    // 创建雨滴类
+    function Drop() { }
+
+    // 给雨滴类添加原型方法
+    Drop.prototype = {
+        init: function () {//初始化雨滴对象
+            this.x = random(0, w)//随机坐标
+            this.y = 0
+        },
+        draw: function () { // 绘制
+            ctx.fillStyle = '#0ff'
+            ctx.fillRect(this.x, this.y, 3, 20);
+        }
+    }
+
+    //实例化30个
+    var drops = [];
+    for (var i = 0; i < 30; i++) {
+        var drop = new Drop(); //实例化雨滴对象
+        drop.init();
+        drops.push(drop);
+    }
+
+    // 绘制出30个雨滴
+    for (var i = 0; i < 30; i++) {
+        drops[i].draw()
+    }
+
+    // 生成随机数 max~min
+    function random(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+</script>
+
+</html>

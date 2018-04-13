@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // Object.create的方法。 ES5 中
+    // Object.create( 对象 ) -> 新对象
+    // 功能：返回的新对象，原型就是参数中表示的对象
+/*
+    var o = {
+        sayHello: function () {
+            console.log("say,hello")
+        }
+    }
+    var o1 = Object.create(o);  // 创建新对象o1，该新对象原型_proto_就是o
+
+    // 创建对象，具有数组方法，并存储数字，遍历出来。
+    var o1 = inheirt([])
+    o1.push(1, 2, 3)
+    for (var i = 0; i < o1.length; i++) {
+        console.log(o1[i])
+    }
+    // 浏览器不兼容情况
+    function inheirt(obj) {
+        if (Object.create) {
+            return Object.create(obj)
+        } else {
+            function fn() { }
+            fn.prototype = obj;
+            return new fn()
+        }
+    }
+*/
+
+
+
+</script>
+
+</html>

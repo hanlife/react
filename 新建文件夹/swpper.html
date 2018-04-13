@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .warpper_box {
+            width: 100%;
+            height: 200px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+
+        .wrapper_list {
+            list-style: none;
+            overflow: hidden;
+            transform: translateZ(0px);
+        }
+
+        .wrapper_list li {
+            float: left;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 200px;
+            list-style: none;
+        }
+
+        .wrapper_list li img {
+            width: 80%;
+            background: #ccc;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="warpper_box">
+        <div class="bg"></div>
+        <ul class="wrapper_list">
+            <li>
+                <img src="线上.png" width="200" height="200" alt="">
+            </li>
+            <li>
+                <img src="线上.png" width="200" height="200" alt="">
+            </li>
+            <li>
+                <img src="线上.png" width="200" height="200" alt="">
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+    var oLi = document.querySelectorAll("li");
+    var oUl = document.querySelector("ul");
+    var oSilde = document.querySelector('.warpper_box');
+    var len = oLi.length;
+    oUl.style.width = len + "00%";
+
+    oSilde.addEventListener("touchstart", touch, false);
+    oSilde.addEventListener("touchmove", touch, false);
+    oSilde.addEventListener("touchend", touch, false);
+
+    var startP, endP, nowP; // 手指触摸点 结束点 触摸当前点
+    oUl.transform = {}; // 存放UL的translateX值
+    var startX, nowX; // 存放当前位子 当前元素变量
+    var onTouch = false;
+    var num;
+
+    function touch(e) {
+        var e = window.event || event;
+        e.preventDefault();
+        // console.log(e)
+        switch (e.type) {
+            case "touchstart":
+                if (e.target.parentNode.tagName == "LI") {
+                    startP = e.changedTouches[0]
+                    startX = oUl.transform["transformX"] || 0;
+                    onTouch = true
+                }
+                break;
+            case "touchmove":
+                if (onTouch) {
+                    nowP = e.changedTouches[0]
+                    var disX = nowP.pageX - startP.pageX; // 移动距离
+                    nowX = startX + disX;
+                    oUl.transform["transformX"] = nowX;
+                    oUl.style.transition =  "0s"
+                    oUl.style.transform = "translateX(" + nowX + "px)";
+                }
+                break;
+            case "touchend":
+                endP = e.changedTouches[0]
+                onTouch = false
+                var l = oUl.transform["transformX"]
+                l = Math.min(0, l)
+                l = Math.max(-(len - 1) * oLi[0].offsetWidth, l)
+                num = Math.round(-l / oLi[0].offsetWidth)
+                oUl.style.transition = "0.5s"
+                oUl.transform["transformX"] = -num * oLi[0].offsetWidth
+                oUl.style.transform = "translateX(" + -num * oLi[0].offsetWidth + "px)";
+                break;
+        }
+    }
+</script>
+
+</html>

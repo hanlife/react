@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .floatage p {
+            color: #368;
+            font-size: 16px;
+        }
+
+        .floatage p span {
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="floatage">
+        <p>我来到你的城市，走过你来时的路。想象着你的画面，我是怎样的孤独。</p>
+    </div>
+</body>
+<script>
+    var oFloataget = document.querySelector('.floatage');
+    var oP = oFloataget.querySelector('p');
+    var params = []; // 存储文本
+    var pos = []; // 存储运动轨迹
+    var aSpan;
+    var spanLength = 0;
+    var Index = 0;
+    var locations = {
+        x: 0,
+        y: 0
+    }
+    var timer; // 初始化延迟
+    init()
+    // 初始化队列
+    function init() {
+        params = oP.innerText.split('');
+        params = params.map(function (item) {
+            return "<span>" + item + "</span>"
+        })
+        oP.innerHTML = params.join("");
+        aSpan = oP.children
+        spanLength = aSpan.length
+    }
+    // 文本位移
+    function displacement(parms) {
+        pos.push(parms);
+        if (pos.length > spanLength) {
+            [].forEach.call(aSpan, function (item, index, arr) {
+                item.style.top = pos[spanLength - index].y + 'px';
+                item.style.left = pos[spanLength - index].x + 'px';
+                item.style.transition = `0s 0s`;
+            });
+            (pos.length > spanLength) && (pos.shift());
+        }
+    }
+    // 停止动画
+    function stop() {
+        [].forEach.call(aSpan, function (item, idx) {
+            item.style.transition = `0.3s ${idx * .01}s`;
+            item.style.top = locations.y + 'px';
+            item.style.left = locations.x + 'px';
+        })
+        pos.map(function (index) { return locations })
+    }
+    // 鼠标事件监听
+    document.addEventListener("mousemove", function (e) {
+        clearTimeout(timer)
+        // JSON存储数据
+        locations = {
+            x: e.clientX,
+            y: e.clientY
+        }
+        Index++;
+        (Index %= 2) || displacement(locations)
+        timer = setTimeout(function () { stop() }, 100)
+    }, false);
+
+
+</script>
+
+</html>

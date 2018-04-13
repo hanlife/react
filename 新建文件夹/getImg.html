@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>生成二维码</title>
+</head>
+
+<body>
+    <form id="form" enctype="multipart/form-data">
+        <input type="file" name="image" id="img">
+        <input type="text" value="appid" name="appid">
+        <input type="text" value="mode" name="mode">
+    </form>
+    <button id="btn">upload</button>
+</body>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+    $(function () {
+        $('#btn').click(function () {
+            var form = document.getElementById("form")
+            var fd = new FormData(form)
+            console.log(fd.get("appid"))
+            $.ajax({
+                url: 'https://service.image.myqcloud.com/face/detect',
+                type: 'POST',
+                dataType: 'JSON',
+                data: fd,
+                header: {
+                    "Authorization": 'eAAM5pB8SCHzOUvvp6s48Xg7K81hPTEyNTUzMjc2MzMmYj1jYWl5b3lvJms9QUtJRFRveHVUeW1YWFpaVkdwdk9TTDNZczQ1dVhBZzRIUkwzJmU9MTUyNDM3OTMwMCZ0PTE1MjE3ODczMDAmcj01ODU0MDUzMDMmdT0wJmY9'
+                },
+                success: function (res) {
+                    console.log(res)
+                }
+            })
+
+        })
+    })
+</script>
+
+</html>

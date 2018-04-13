@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    </style>
+</head>
+
+<body>
+</body>
+<script>
+    var xiaowang = function () {
+        var xiaowangjia = function (msg) {
+            this.menling = msg
+        };
+        var men;
+        var info = {
+            sendMsg: function (msg) {
+                if (!men) {
+                    men = new xiaowangjia(msg)
+                };
+                return men;
+            }
+        }
+        return info
+    }()
+    var xiaoli = {
+        callXiaowang: function (msg) {
+            var _xw = xiaowang.sendMsg(msg);
+            console.log(_xw.menling)
+        }
+    }
+    xiaoli.callXiaowang('didi')
+</script>
+<script>
+
+</script>
+
+</html>
